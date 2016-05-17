@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      lang="en"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+<head>
+    <title>Student Registration Form</title>
+</head>
+<body>
+<h:form>
+    First Name: <h:inputText value="#{student.firstName}"/>
+    <br/> <br/>
+    Last Name: <h:inputText value="#{student.lastName}"/>
+    <br/> <br/>
+     <h:outputText value="#{student.message}" style="font-weight:bold;color: #ff2e2c"/>
+
+    <br/> <br/>
+
+    Country:
+    <h:selectOneMenu value="#{student.country}">
+        <f:selectItem itemValue="India" itemLabel="India"/>
+        <f:selectItem itemValue="USA" itemLabel="United States"/>
+        <f:selectItem itemValue="Russia" itemLabel="Russia"/>
+    </h:selectOneMenu>
+
+    <br/> <br/>
+    <h:commandButton value="  ADD  " action="#{studentdata.insertStudent(student)}"/>
+    <br/> <br/>
+    <h:dataTable id="table1" value="#{studentdata.studentList}" var="item"
+                 border="1">
+        <f:facet name="header">
+            <h:outputText value="Students names" />
+        </f:facet>
+        <h:column>
+            <f:facet name="header">
+                Student First Name
+            </f:facet>
+              <h:inputText value="#{item.firstName}"  size="10" rendered="#{item.editable}"/>
+              <h:outputText value="#{item.firstName}" rendered="#{not item.editable}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Student Last Name
+            </f:facet>
+            <h:inputText value="#{item.lastName}" size="10" rendered="#{item.editable}"/>
+            <h:outputText value="#{item.lastName}" rendered="#{not item.editable}" />
+        </h:column>
+        <h:column>
+            <f:facet name="header">
+                Country Name
+            </f:facet>
+            <h:inputText value="#{item.country}" size="10" rendered="#{item.editable}"/>
+            <h:outputText value="#{item.country}"  rendered="#{not item.editable }"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Delete</f:facet>
+               <h:commandButton value="Delete" action="#{studentdata.deleteStudent(item)}"/>
+
+        </h:column>
+        <h:column>
+            <f:facet name="header">Edit</f:facet>
+            <h:commandButton value="Edit " action="#{studentdata.updateStudent(item)}" rendered="#{not item.editable}"/>
+
+        </h:column>
+    </h:dataTable>
+    <br/>
+    <h:commandButton value="Save Student"
+                     action="#{studentdata.saveStudent}" />
+
+</h:form>
+
+</body>
+</html>
